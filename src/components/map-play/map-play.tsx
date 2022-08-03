@@ -25,11 +25,18 @@ function MapPlay() {
         map.current = mapbox;
       });
 
-      mapbox.on('move', () => {
+      mapbox.on('zoomend', () => {
         if (map.current) {
+          console.log('A zoomend event occurred.', map.current.getZoom());
+          setZoom(parseFloat(map.current.getZoom().toFixed(2)));
+        }
+      });
+
+      mapbox.on('moveend', () => {
+        if (map.current) {
+          console.log('A moveend event occurred.', map.current.getBounds());
           setLng(parseFloat(map.current.getCenter().lng.toFixed(4)));
           setLat(parseFloat(map.current.getCenter().lat.toFixed(4)));
-          setZoom(parseFloat(map.current.getZoom().toFixed(2)));
         }
       });
     }
