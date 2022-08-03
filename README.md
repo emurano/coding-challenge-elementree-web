@@ -14,11 +14,15 @@ It's assumed that you are running the backend application, which is available in
 
 The examples assume that you have a terminal open and you current working directory is the base directory of this project, the same directory that this readme file is in.
 
-1. Create the `.env.local` file and set the URL of the backend in the file
+1. Create the `.env.local` file and set the URL of the backend in the file.
    ```shell
    echo "REACT_APP_API_BASEURL=http://localhost:3000/" > .env.local
+   echo "REACT_APP_MAPBOX_ACCESS_TOKEN=XXXX" >> .env.local
    ```
    Change `http://localhost:3000/` to what ever port you're running the API on.
+
+   Change `XXXX` to what ever your MapBox API key is.
+
 2. Switch your version of node to the one the project was built on. This will use the `.nvmrc` file to determine which version of node to switch to.
    ```shell
    nvm use
