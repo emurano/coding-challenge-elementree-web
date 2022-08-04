@@ -1,13 +1,12 @@
-import React from "react";
-import MapPlay from "../map-play";
+import React from 'react';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import MapReact from "../map-react";
+import styles from './app-shell.module.css';
+import MapController from '../map-controller';
 
 function AppShell() {
   return (
-    <div data-testid="app-shell">
-      {/*<MapPlay />*/}
-      <MapReact />
+    <div data-testid="app-shell" className={styles.appShell}>
+      <MapController />
     </div>
   );
 }

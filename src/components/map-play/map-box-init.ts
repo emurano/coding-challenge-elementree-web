@@ -62,6 +62,7 @@ export function initialiseMapBoxCore(
       console.log("A moveend event occurred.", map.current.getBounds());
       setLng(parseFloat(map.current.getCenter().lng.toFixed(4)));
       setLat(parseFloat(map.current.getCenter().lat.toFixed(4)));
+      map.current?.getBounds()
     }
   });
 }
