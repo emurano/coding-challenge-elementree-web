@@ -1,11 +1,13 @@
 import React from "react";
 import MapPlay from "../map-play";
 import 'mapbox-gl/dist/mapbox-gl.css';
+import MapReact from "../map-react";
 
 function AppShell() {
   return (
     <div data-testid="app-shell">
-      <MapPlay />
+      {/*<MapPlay />*/}
+      <MapReact />
     </div>
   );
 }

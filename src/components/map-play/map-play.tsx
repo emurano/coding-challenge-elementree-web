@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import mapboxgl, { Map } from "mapbox-gl";
 import styles from "./map-play.module.css";
+import { initialiseMapBox } from "./map-box-init";
 
 function MapPlay() {
   const mapContainer = useRef() as React.MutableRefObject<HTMLInputElement>;
@@ -13,41 +14,26 @@ function MapPlay() {
   useEffect(() => {
     if (map.current) return;
     if (mapContainer.current) {
-      mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN || '';
-      const mapbox = new Map({
-        container: mapContainer.current,
-        center: [lng, lat],
-        zoom: zoom,
-        style: `mapbox://styles/mapbox/streets-v11`
-      })
-
-      mapbox.on('load', () => {
-        map.current = mapbox;
-      });
-
-      mapbox.on('zoomend', () => {
-        if (map.current) {
-          console.log('A zoomend event occurred.', map.current.getZoom());
-          setZoom(parseFloat(map.current.getZoom().toFixed(2)));
-        }
-      });
-
-      mapbox.on('moveend', () => {
-        if (map.current) {
-          console.log('A moveend event occurred.', map.current.getBounds());
-          setLng(parseFloat(map.current.getCenter().lng.toFixed(4)));
-          setLat(parseFloat(map.current.getCenter().lat.toFixed(4)));
-        }
+      initialiseMapBox(map, mapContainer, {
+        startingPosition: [lng, lat],
+        startingZoom: zoom,
+        setLng,
+        setLat,
+        setZoom
       });
     }
-  });
+  }, [lng, lat, zoom, map.current, mapContainer.current]);
 
   return (
     <div>
       <div className={styles.sidebar}>
-        Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
+        Longitude: {lng} | Latitude: {lat} |
+        <span data-testid='map-play-zoom'>Zoom: {zoom}</span>
       </div>
-      <div ref={mapContainer} className={styles['map-container']} />
+      <div
+        ref={mapContainer}
+        className={styles["map-container"]}
+        data-testid='map-play-map-object'/>
     </div>
   );
 }
