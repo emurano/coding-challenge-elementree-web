@@ -1,13 +1,16 @@
-import React from "react";
-import LocationPlotMap from "../location-plot-map";
+import React, { useRef, useState } from "react";
+import Map from "../map";
+import { Map as MapBoxMap } from "mapbox-gl";
 
 export default function MapController() {
 
   const locations = [
-    {lat: 37.8, lng: -122.4}
+    {lat: 42.35, lng: -70.9},
+    {lat: 42.3, lng: -70}
   ];
 
+
   return (
-    <LocationPlotMap locations={locations} />
+    <Map locations={locations} />
   );
 }

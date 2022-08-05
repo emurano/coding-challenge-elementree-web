@@ -1,7 +1,7 @@
 import React from "react";
 import './map-box-init';
 import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
-import MapPlay from "./index";
+import Map from "./index";
 
 
 jest.mock('./map-box-init', () => {
@@ -49,36 +49,18 @@ jest.mock('./map-box-init', () => {
   };
 });
 
-describe('map-play', () => {
+describe('map', () => {
 
   beforeEach(() => {
   });
 
   it('something', async () => {
-    const { container } = render(<MapPlay />);
+    const { container } = render(<Map locations={[]}/>);
 
-    fireEvent.scroll(screen.getByTestId('map-play-map-object'), {
+    fireEvent.scroll(screen.getByTestId('map-map-object'), {
       target: { scrollY: -100 }
     });
-    // fireEvent(
-    //   screen.getByTestId('map-play-map-object'),
-    //   new MouseEvent('scroll', {
-    //     movementY: 100
-    //   })
-    // )
-    //
 
-    // fireEvent.wheel(
-    //   screen.getByTestId('map-play-map-object'),
-    //   {
-    //     bubbles: true,
-    //     deltaY: 30,
-    //     x: 30,
-    //     y: 30,
-    //     deltaMode: WheelEvent.DOM_DELTA_LINE
-    //   }
-    // );
-
-    await waitFor(() => expect(screen.getByTestId('map-play-zoom')).toHaveTextContent('Zoom: 7'));
+    await waitFor(() => expect(screen.getByTestId('map-zoom')).toHaveTextContent('Zoom: 7'));
   });
 })

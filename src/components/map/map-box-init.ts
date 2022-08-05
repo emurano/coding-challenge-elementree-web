@@ -1,7 +1,7 @@
-import mapboxgl, { LngLatLike, Map } from "mapbox-gl";
+import mapboxgl, { LngLatLike, Map as MapBoxMap, Map } from "mapbox-gl";
 import React from "react";
 
-type MapRef = React.MutableRefObject<Map | undefined>;
+export type MapRef = React.MutableRefObject<Map | undefined>;
 type ContainerRef = React.MutableRefObject<HTMLInputElement>;
 
 export interface MapOptions {
@@ -18,11 +18,12 @@ export interface MapOptions {
 export function initialiseMapBox(
     map: MapRef,
     container: ContainerRef,
+    setMap: (newMap: MapBoxMap) => void,
     { startingPosition, startingZoom, setZoom, setLng, setLat }: MapOptions
 ) {
   mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN || "";
 
-  initialiseMapBoxCore(map, container, {
+  initialiseMapBoxCore(map, container, setMap, {
     startingPosition,
     startingZoom,
     setZoom,
@@ -36,6 +37,7 @@ export function initialiseMapBox(
 export function initialiseMapBoxCore(
   map: MapRef,
   container: ContainerRef,
+  setMap: (newMap: MapBoxMap) => void,
   { startingPosition, startingZoom, setZoom, setLng, setLat, style, testMode }: MapOptions
 ) {
   const mapbox = new Map({
@@ -48,6 +50,8 @@ export function initialiseMapBoxCore(
 
   mapbox.on("load", () => {
     map.current = mapbox;
+    console.log('map * == ', map);
+    setMap(mapbox);
   });
 
   mapbox.on("zoomend", () => {
