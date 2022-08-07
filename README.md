@@ -10,6 +10,10 @@ It's assumed that the system you are running the application on uses NVM to mana
 
 After checking out the codebase, follow these instructions to run the application.
 
+> :warning: Note: at this time, the backend application has not been written yet.
+> You won't need to have a node application running nor do you need to define the `REACT_APP_API_BASEURL`
+> environment variable.
+
 It's assumed that you are running the backend application, which is available in another GitHub repository. You will need the URL of the backend application to follow these steps.
 
 The examples assume that you have a terminal open and you current working directory is the base directory of this project, the same directory that this readme file is in.
