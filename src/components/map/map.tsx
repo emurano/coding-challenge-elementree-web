@@ -4,8 +4,6 @@ import { Coordinates, MapBounds } from 'shared/types';
 
 const MAPBOX_ACCESS_TOKEN = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN || '';
 
-console.log('MAPBOX_ACCESS_TOKEN', MAPBOX_ACCESS_TOKEN);
-
 interface MapProps {
   initialCentre: Coordinates;
   onBoundsChange: (bounds: MapBounds) => void;
