@@ -21,7 +21,7 @@ The examples assume that you have a terminal open and you current working direct
    ```
    Change `http://localhost:3000/` to what ever port you're running the API on.
 
-   Change `XXXX` to what ever your MapBox API key is.
+   Change `XXXX` to what ever your Map API key is.
 
 2. Switch your version of node to the one the project was built on. This will use the `.nvmrc` file to determine which version of node to switch to.
    ```shell

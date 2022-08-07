@@ -4,7 +4,7 @@ import { act, fireEvent, render, screen, waitFor } from "@testing-library/react"
 import Map from "./index";
 
 
-jest.mock('./map-box-init', () => {
+jest.mock('./map-old-box-init', () => {
   const testStyle = {
     version: 8,
     sources: {
@@ -35,7 +35,7 @@ jest.mock('./map-box-init', () => {
     ],
   };
 
-  const originalModule = jest.requireActual('./map-box-init');
+  const originalModule = jest.requireActual('./map-old-box-init');
   return {
     __esModule: true,
     ...originalModule,
@@ -57,10 +57,10 @@ describe('map', () => {
   it('something', async () => {
     const { container } = render(<Map locations={[]}/>);
 
-    fireEvent.scroll(screen.getByTestId('map-map-object'), {
+    fireEvent.scroll(screen.getByTestId('map-old-map-old-object'), {
       target: { scrollY: -100 }
     });
 
-    await waitFor(() => expect(screen.getByTestId('map-zoom')).toHaveTextContent('Zoom: 7'));
+    await waitFor(() => expect(screen.getByTestId('map-old-zoom')).toHaveTextContent('Zoom: 7'));
   });
 })

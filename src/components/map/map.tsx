@@ -1,76 +1,61 @@
-import React, { useEffect, useRef, useState } from 'react';
-// eslint-disable-next-line import/no-webpack-loader-syntax
-import mapboxgl, { Map as MapBoxMap } from 'mapbox-gl';
-import styles from './map.module.css';
-import { initialiseMapBox, MapRef } from "./map-box-init";
+import React, { MutableRefObject, useCallback, useRef } from 'react';
+import MapBox, { MapRef, Marker } from 'react-map-gl';
 
-interface Location {
+const MAPBOX_ACCESS_TOKEN = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN || '';
+
+console.log('MAPBOX_ACCESS_TOKEN', MAPBOX_ACCESS_TOKEN);
+
+export interface Coordinates {
   lng: number;
   lat: number;
 }
 
-interface MapProps {
-  locations: Location[];
+export interface MapBounds {
+  sw: Coordinates;
+  ne: Coordinates;
 }
 
-function Map({ locations }: MapProps) {
-  const mapContainer = useRef() as React.MutableRefObject<HTMLInputElement>;
-  const map = useRef<MapBoxMap>();
-  const [lng, setLng] = useState(-70.9);
-  const [lat, setLat] = useState(42.35);
-  const [zoom, setZoom] = useState(9);
-  const [markerLocations, setMarketLocations] = useState<Location[]>([]);
-  const setMap = (newMap: MapBoxMap) => {
-    map.current = newMap;
-  };
+interface MapProps {
+  initialCentre: Coordinates;
+  onBoundsChange: (bounds: MapBounds) => void;
+  markerLocations: Coordinates[];
+}
 
-  useEffect(() => {
-    if (map.current) return;
-    if (mapContainer.current) {
-      initialiseMapBox(map, mapContainer, setMap, {
-        startingPosition: [lng, lat],
-        startingZoom: zoom,
-        setLng,
-        setLat,
-        setZoom,
-      });
+function coordinatesKey(coordinates: Coordinates): string {
+  return `${coordinates.lat.toString()}::${coordinates.lng.toString()}`;
+}
 
-      console.log('map == ', map);
-    }
-  }, [lng, lat, zoom, map.current, mapContainer.current]);
+export default function Map({
+  initialCentre,
+  onBoundsChange,
+  markerLocations,
+}: MapProps) {
+  const mapRef = useRef<MapRef>() as MutableRefObject<MapRef>;
 
-  useEffect(() => {
-    console.log('location update effect', markerLocations, map.current);
-    markerLocations.forEach((loc) => {
-      const marker = new mapboxgl.Marker().setLngLat(loc);
-
-      if (map.current) {
-        marker.addTo(map.current);
-        console.log('map is set');
-      } else {
-        console.warn('Map is not set');
-      }
-    });
-  }, [markerLocations, map.current]);
-
-  useEffect(() => {
-    console.log('locations has changed', locations);
-    setMarketLocations(locations);
-  }, [locations]);
+  const onCameraChange = useCallback(() => {
+    const bounds = mapRef.current.getBounds();
+    const sw = bounds.getSouthWest() as { lat: number; lng: number };
+    const ne = bounds.getNorthEast() as { lat: number; lng: number };
+    onBoundsChange({ sw, ne });
+  }, [mapRef]);
 
   return (
-    <div>
-      <div className={styles.sidebar}>
-        Longitude: {lng} | Latitude: {lat} |
-        <span data-testid="map-play-zoom">Zoom: {zoom}</span>
-      </div>
-      <div
-        ref={mapContainer}
-        className={styles['map-container']}
-        data-testid="map-play-map-object"
-      />
-    </div>
+    <MapBox
+      ref={mapRef}
+      initialViewState={{
+        zoom: 8,
+        latitude: initialCentre.lat,
+        longitude: initialCentre.lng,
+      }}
+      onMoveEnd={onCameraChange}
+      onPitchEnd={onCameraChange}
+      onRotateEnd={onCameraChange}
+      mapStyle="mapbox://styles/mapbox/streets-v11"
+      mapboxAccessToken={MAPBOX_ACCESS_TOKEN}
+    >
+      {markerLocations.map((loc) => (
+        <Marker longitude={loc.lng} latitude={loc.lat} key={coordinatesKey(loc)}/>
+      ))}
+    </MapBox>
   );
 }
-
-export default Map;

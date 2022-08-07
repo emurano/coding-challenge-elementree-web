@@ -18,12 +18,12 @@ export interface MapOptions {
 export function initialiseMapBox(
     map: MapRef,
     container: ContainerRef,
-    setMap: (newMap: MapBoxMap) => void,
+    mapReady: () => void,
     { startingPosition, startingZoom, setZoom, setLng, setLat }: MapOptions
 ) {
   mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN || "";
 
-  initialiseMapBoxCore(map, container, setMap, {
+  initialiseMapBoxCore(map, container, mapReady, {
     startingPosition,
     startingZoom,
     setZoom,
@@ -34,10 +34,26 @@ export function initialiseMapBox(
   });
 }
 
+/**
+ * Initialise a Map map-old object and attach it to the given HTML element
+ *
+ * This function can be called by test code to initialise a map-old in testMode
+ *
+ * @param map - The ref to assign the Map Map object to
+ * @param container - The ref pointing to the container
+ * @param mapReady - The function that is called when the map-old is completely loaded
+ * @param startingPosition - The lat/lng to centre the map-old to on load
+ * @param startingZoom - The zoom level to set the map-old to on load
+ * @param setZoom - A function that can be called when the zoom is changed
+ * @param setLng
+ * @param setLat
+ * @param style
+ * @param testMode
+ */
 export function initialiseMapBoxCore(
   map: MapRef,
   container: ContainerRef,
-  setMap: (newMap: MapBoxMap) => void,
+  mapReady: () => void,
   { startingPosition, startingZoom, setZoom, setLng, setLat, style, testMode }: MapOptions
 ) {
   const mapbox = new Map({
@@ -50,8 +66,7 @@ export function initialiseMapBoxCore(
 
   mapbox.on("load", () => {
     map.current = mapbox;
-    console.log('map * == ', map);
-    setMap(mapbox);
+    mapReady();
   });
 
   mapbox.on("zoomend", () => {
