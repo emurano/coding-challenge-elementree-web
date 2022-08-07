@@ -16,7 +16,7 @@ After checking out the codebase, follow these instructions to run the applicatio
 
 It's assumed that you are running the backend application, which is available in another GitHub repository. You will need the URL of the backend application to follow these steps.
 
-The examples assume that you have a terminal open and you current working directory is the base directory of this project, the same directory that this readme file is in.
+The examples assume that you have a terminal open and your current working directory is the base directory of this project, the same directory that this readme file is in.
 
 1. Create the `.env.local` file and set the URL of the backend in the file.
    ```shell
