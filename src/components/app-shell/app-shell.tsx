@@ -1,7 +1,7 @@
 import React from 'react';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import styles from './app-shell.module.css';
-import MapController from '../map-controller';
+import MapController from 'components/map-controller';
 
 function AppShell() {
   return (

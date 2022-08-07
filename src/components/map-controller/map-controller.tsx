@@ -1,24 +1,23 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from 'react';
 import Map from '../map';
-import { Coordinates, MapBounds } from "../map/map";
+import { Coordinates, MapBounds } from 'shared/types';
+import { findLocations } from "services/find-locations";
 
 export default function MapController() {
+  const [locations, setLocations] = useState<Coordinates[]>([]);
 
-  const locations: Coordinates[] = [
-    {lng: -122.52774892578127, lat: 37.22656333340048},
-    {lng: -122.4376, lat: 37.7577}
-  ];
-
-  const onBoundsChange = useCallback((bounds: MapBounds) => {
-    console.log('got new bounds, go fetch some locations', bounds)
+  const onBoundsChange = useCallback(async (bounds: MapBounds) => {
+    const newLocations = await findLocations(bounds);
+    setLocations(newLocations);
   }, []);
 
   return (
     <div style={{ height: '100vh' }}>
       <Map
-        initialCentre={{lat: 37.7577, lng: -122.43}}
+        initialCentre={{ lat: 37.7577, lng: -122.43 }}
         onBoundsChange={onBoundsChange}
-        markerLocations={locations}/>
+        markerLocations={locations}
+      />
     </div>
   );
 }

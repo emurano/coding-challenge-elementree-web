@@ -1,19 +1,10 @@
 import React, { MutableRefObject, useCallback, useRef } from 'react';
 import MapBox, { MapRef, Marker } from 'react-map-gl';
+import { Coordinates, MapBounds } from 'shared/types';
 
 const MAPBOX_ACCESS_TOKEN = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN || '';
 
 console.log('MAPBOX_ACCESS_TOKEN', MAPBOX_ACCESS_TOKEN);
-
-export interface Coordinates {
-  lng: number;
-  lat: number;
-}
-
-export interface MapBounds {
-  sw: Coordinates;
-  ne: Coordinates;
-}
 
 interface MapProps {
   initialCentre: Coordinates;
@@ -37,7 +28,7 @@ export default function Map({
     const sw = bounds.getSouthWest() as { lat: number; lng: number };
     const ne = bounds.getNorthEast() as { lat: number; lng: number };
     onBoundsChange({ sw, ne });
-  }, [mapRef]);
+  }, [mapRef, onBoundsChange]);
 
   return (
     <MapBox
@@ -50,11 +41,16 @@ export default function Map({
       onMoveEnd={onCameraChange}
       onPitchEnd={onCameraChange}
       onRotateEnd={onCameraChange}
+      onLoad={onCameraChange}
       mapStyle="mapbox://styles/mapbox/streets-v11"
       mapboxAccessToken={MAPBOX_ACCESS_TOKEN}
     >
       {markerLocations.map((loc) => (
-        <Marker longitude={loc.lng} latitude={loc.lat} key={coordinatesKey(loc)}/>
+        <Marker
+          longitude={loc.lng}
+          latitude={loc.lat}
+          key={coordinatesKey(loc)}
+        />
       ))}
     </MapBox>
   );
