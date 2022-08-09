@@ -20,10 +20,10 @@ The examples assume that you have a terminal open and your current working direc
 
 1. Create the `.env.local` file and set the URL of the backend in the file.
    ```shell
-   echo "REACT_APP_API_BASEURL=http://localhost:3000/" > .env.local
+   echo "REACT_APP_API_BASEURL=http://localhost:3001/" > .env.local
    echo "REACT_APP_MAPBOX_ACCESS_TOKEN=XXXX" >> .env.local
    ```
-   Change `http://localhost:3000/` to what ever port you're running the API on.
+   Change `http://localhost:3001/` to what ever port you're running the API on.
 
    Change `XXXX` to what ever your Map API key is.
 
