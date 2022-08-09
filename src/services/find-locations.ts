@@ -20,14 +20,10 @@ export async function findLocations(bounds: MapBounds | undefined): Promise<Coor
     const response = await axios.get(url);
     return response.data;
   } catch (error) {
-
     const axiosError = error as AxiosError;
     if (axiosError.response?.status === 400) {
       throw new Error('The map could not find locations from the server');
     }
-
-    console.log('error message', (error as AxiosError));
-
     throw error;
   }
 }

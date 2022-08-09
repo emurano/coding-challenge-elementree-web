@@ -3,7 +3,7 @@ import styles from './hovering-loader.module.css';
 
 function HoveringLoader() {
   return (
-    <div className={styles.popOver}>
+    <div className="popOver">
       <span className={styles.ldsDualRing}></span>
       <span>Loading ...</span>
     </div>
