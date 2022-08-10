@@ -1,11 +1,9 @@
 import { useCallback, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { findLocations } from "services/find-locations";
+import findLocations from "services/find-locations";
 import { Coordinates, MapBounds } from "shared/types";
 
 interface MapControllerHook {
-  bounds?: MapBounds;
-  setBounds: (newBounds: MapBounds) => void;
   onBoundsChange: (newBounds: MapBounds) => void;
   isLoading: boolean;
   isError: boolean;
@@ -34,8 +32,6 @@ function useMapController(): MapControllerHook {
   const myError = error as Error;
 
   return {
-    bounds,
-    setBounds,
     onBoundsChange,
     isLoading,
     isError,
@@ -49,4 +45,4 @@ function boundsToString(bounds: MapBounds | undefined): string {
   return `${bounds.sw.lat}::${bounds.sw.lng}::${bounds.ne.lat}::${bounds.ne.lng}`;
 }
 
-export { useMapController };
+export default useMapController;

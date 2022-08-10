@@ -5,7 +5,7 @@ const API_BASEURL = process.env.REACT_APP_API_BASEURL || '';
 
 const en = (raw: number) => encodeURIComponent(raw);
 
-export async function findLocations(bounds: MapBounds | undefined): Promise<Coordinates[]> {
+export default async function findLocations(bounds: MapBounds | undefined): Promise<Coordinates[]> {
 
   if (!bounds) return [];
 
