@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import findLocations from "services/find-locations";
 import { Coordinates, MapBounds } from "shared/types";
 
-interface MapControllerHook {
+export interface MapControllerHook {
   onBoundsChange: (newBounds: MapBounds) => void;
   isLoading: boolean;
   isError: boolean;

@@ -1,17 +1,18 @@
 import React from 'react';
-import styles from "./hovering-error.module.css";
+import styles from './hovering-error.module.css';
 
 interface HoveringErrorProps {
+  testId?: string;
   errorMessage: string;
 }
 
-function HoveringError({ errorMessage }: HoveringErrorProps) {
+function HoveringError({ testId, errorMessage }: HoveringErrorProps) {
   return (
-    <div className="popOver">
-    <span className={styles.errorIcon}>&#9888;</span>
-    <span>{errorMessage}</span>
-  </div>
-  )
+    <div className="popOver" data-testid={testId}>
+      <span className={styles.errorIcon}>&#9888;</span>
+      <span>{errorMessage}</span>
+    </div>
+  );
 }
 
-export { HoveringError };
+export default HoveringError;

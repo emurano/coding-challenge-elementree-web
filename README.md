@@ -1,24 +1,23 @@
-# Elementree coding challenge - Eric Murano
+# Elementree coding challenge - Web - Eric Murano
 
 This application is the frontend component of my submission to the Elementree coding challenge.
 
 ## Assumptions about your system
 
-It's assumed that the system you are running the application on uses NVM to manage different versions of Node.
+For the purposes of the instructions in this readme, it's assumed that:
+
+1. the system you are running the application on uses NVM to manage different versions of Node, and
+2. you are running in some sort of unix like shell like bash or zsh
 
 ## Running the application
 
 After checking out the codebase, follow these instructions to run the application.
 
-> :warning: Note: at this time, the backend application has not been written yet.
-> You won't need to have a node application running nor do you need to define the `REACT_APP_API_BASEURL`
-> environment variable.
-
 It's assumed that you are running the backend application, which is available in another GitHub repository. You will need the URL of the backend application to follow these steps.
 
-The examples assume that you have a terminal open and your current working directory is the base directory of this project, the same directory that this readme file is in.
 
-1. Create the `.env.local` file and set the URL of the backend in the file.
+1. In a terminal, change to the directory that you checked the code out in (the directory this readme file is in) 
+2. Create the `.env.local` file and set the URL of the backend in the file.
    ```shell
    echo "REACT_APP_API_BASEURL=http://localhost:3001/" > .env.local
    echo "REACT_APP_MAPBOX_ACCESS_TOKEN=XXXX" >> .env.local
@@ -27,11 +26,11 @@ The examples assume that you have a terminal open and your current working direc
 
    Change `XXXX` to what ever your Map API key is.
 
-2. Switch your version of node to the one the project was built on. This will use the `.nvmrc` file to determine which version of node to switch to.
+3. Switch your version of node to the one the project was built on. This will use the `.nvmrc` file to determine which version of node to switch to.
    ```shell
    nvm use
    ```
-3. Run the react-scripts run command
+4. Run the react-scripts run command
    ```shell
    npm start
    ```
